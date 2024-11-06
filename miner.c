@@ -10178,9 +10178,11 @@ static struct work *clone_work(struct work *work)
 void gen_hash(unsigned char *data, unsigned char *hash, int len)
 {
 	unsigned char hash1[32];
+	unsigned char hash2[32];
 
 	sha256(data, len, hash1);
-	sha256(hash1, 32, hash);
+	sha256(hash1, 32, hash2);
+	sha256(hash2, 32, hash);
 }
 
 /* PDiff 1 is a 256 bit unsigned integer of
