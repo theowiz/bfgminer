@@ -5,7 +5,7 @@
 #   docker build .
 # Docker Hub:
 #   https://hub.docker.com/repository/docker/ 
-FROM nvidia/opencl:devel-ubuntu18.04
+FROM chihchun/opencl-intel
 
 LABEL maintainer="x"
 LABEL version="0.0.1"
