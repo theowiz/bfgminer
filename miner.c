@@ -10191,6 +10191,7 @@ void gen_hash_triple(unsigned char *data, unsigned char *hash, int len)
 	sha256(data, len, hash1);
 	sha256(hash1, 32, hash2);
 	sha256(hash2, 32, hash);
+	printf(".");
 }
 
 /* PDiff 1 is a 256 bit unsigned integer of
