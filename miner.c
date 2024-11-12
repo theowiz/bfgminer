@@ -10178,6 +10178,14 @@ static struct work *clone_work(struct work *work)
 void gen_hash(unsigned char *data, unsigned char *hash, int len)
 {
 	unsigned char hash1[32];
+
+	sha256(data, len, hash1);
+	sha256(hash1, 32, hash);
+}
+
+void gen_hash_triple(unsigned char *data, unsigned char *hash, int len)
+{
+	unsigned char hash1[32];
 	unsigned char hash2[32];
 
 	sha256(data, len, hash1);

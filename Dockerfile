@@ -15,7 +15,7 @@ RUN apt update
 RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
-ENV PACKAGES="\
+ENV PACKAGES="sudo apt update && sudo apt install \
   git \
   build-essential \
   software-properties-common \
@@ -30,6 +30,7 @@ ENV PACKAGES="\
   clinfo \
   autoconf \
   automake \
+  mesa-opencl-icd \ 
   libjansson-dev \
   libevent-dev \
   uthash-dev \
@@ -71,7 +72,7 @@ CMD ["bash"]
 # root@host:~$ 
 #
 # 1 x GPUs
-# /root/bfgminer/bfgminer -S opencl:auto -o http://<elemental-node-host>:8332 -u username -p password --set-device OCL:kernel=poclbm --generate-to <address> 
+# /root/bfgminer/bfgminer -S opencl:auto -o http://<elemental-node-host>:8332 -u username -p password --set-device OCL:kernel=poclbm --generate-to <address>
 
 # 2 x GPUs
 # /root/bfgminer/bfgminer -S opencl:auto -o http://<elemental-node-host>:8332 -u username -p password --set-device OCL0:kernel=poclbm --set-device OCL1:kernel=poclbm --generate-to <address>
