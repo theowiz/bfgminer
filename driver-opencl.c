@@ -1301,6 +1301,7 @@ cl_int queue_fullheader_kernel(const struct opencl_kernel_info * const kinfo, _c
 static
 struct opencl_kernel_interface kernel_interfaces[] = {
 	{NULL},
+	{"elemental", queue_elemental_kernel },
 #ifdef USE_SHA256D
 	{"poclbm",  queue_poclbm_kernel },
 	{"phatk",   queue_phatk_kernel  },
@@ -1717,18 +1718,23 @@ float opencl_min_nonce_diff(struct cgpu_info * const proc, const struct mining_a
 	return malgo->opencl_min_nonce_diff ?: -1.;
 }
 
-#ifdef USE_SHA256D
 static bool opencl_prepare_work(struct thr_info __maybe_unused *thr, struct work *work)
 {
 	const struct mining_algorithm * const malgo = work_mining_algorithm(work);
+#ifdef USE_SHA256D
 	if (malgo->algo == POW_SHA256D)
 	{
 		struct opencl_work_data * const blk = _opencl_work_data(work);
 		precalc_hash(blk, (uint32_t *)(work->midstate), (uint32_t *)(work->data + 64));
 	}
+#endif
+	if (malgo->algo == POW_SHA256E3)
+	{
+		struct opencl_work_data * const blk = _elemental_work_data(work);
+		precalc_hash(blk, (uint32_t *)(work->midstate), (uint32_t *)(work->data + 64));
+	}
 	return true;
 }
-#endif
 
 extern int opt_dynamic_interval;
 

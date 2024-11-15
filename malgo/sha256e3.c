@@ -27,25 +27,25 @@ void hash_data(void *out_hash, const void *data)
 	// data is past the first SHA256 step (padding and interpreting as big endian on a little endian platform), so we need to flip each 32-bit chunk around to get the original input block header
 	swap32yes(blkheader, data, 80 / 4);
 	
-	// double-SHA256 to get the block hash
-	gen_hash(blkheader, out_hash, 80);
+	// triple-SHA256 to get the block hash
+	gen_hash_triple(blkheader, out_hash, 80);
 }
 
 #ifdef USE_OPENCL
 static
-float opencl_oclthreads_to_intensity_sha256d(const unsigned long oclthreads)
+float opencl_oclthreads_to_intensity_sha256e3(const unsigned long oclthreads)
 {
 	return log2f(oclthreads) - 15.;
 }
 
 static
-unsigned long opencl_intensity_to_oclthreads_sha256d(float intensity)
+unsigned long opencl_intensity_to_oclthreads_sha256e3(float intensity)
 {
 	return powf(2, intensity + 15);
 }
 
 static
-char *opencl_get_default_kernel_file_sha256d(const struct mining_algorithm * const malgo, struct cgpu_info * const cgpu, struct _clState * const clState)
+char *opencl_get_default_kernel_file_sha256e3(const struct mining_algorithm * const malgo, struct cgpu_info * const cgpu, struct _clState * const clState)
 {
 	const char * const vbuff = clState->platform_ver_str;
 	
@@ -84,11 +84,11 @@ char *opencl_get_default_kernel_file_sha256d(const struct mining_algorithm * con
 }
 #endif  /* USE_OPENCL */
 
-struct mining_algorithm malgo_sha256d = {
-	.name = "SHA256d",
-	.aliases = "SHA256d|SHA256|SHA2",
+struct mining_algorithm malgo_sha256e3 = {
+	.name = "SHA256e3",
+	.aliases = "SHA256e3",
 	
-	.algo = POW_SHA256D,
+	.algo = POW_SHA256E3,
 	.ui_skip_hash_bytes = 4,
 	.worktime_skip_prevblk_u32 = 1,
 	.reasonable_low_nonce_diff = 1.,
@@ -97,18 +97,18 @@ struct mining_algorithm malgo_sha256d = {
 	
 #ifdef USE_OPENCL
 	.opencl_nodefault = true,
-	.opencl_oclthreads_to_intensity = opencl_oclthreads_to_intensity_sha256d,
-	.opencl_intensity_to_oclthreads = opencl_intensity_to_oclthreads_sha256d,
+	.opencl_oclthreads_to_intensity = opencl_oclthreads_to_intensity_sha256e3,
+	.opencl_intensity_to_oclthreads = opencl_intensity_to_oclthreads_sha256e3,
 	.opencl_min_oclthreads =       0x20,  // intensity -10
 	.opencl_max_oclthreads = 0x20000000,  // intensity  14
 	.opencl_min_nonce_diff = 1.,
-	.opencl_get_default_kernel_file = opencl_get_default_kernel_file_sha256d,
+	.opencl_get_default_kernel_file = opencl_get_default_kernel_file_sha256e3,
 #endif
 };
 
 static
 __attribute__((constructor))
-void init_sha256d(void)
+void init_sha256e3(void)
 {
-    LL_APPEND(mining_algorithms, (&malgo_sha256d));
+    LL_APPEND(mining_algorithms, (&malgo_sha256e3));
 }

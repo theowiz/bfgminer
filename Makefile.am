@@ -204,6 +204,11 @@ endif # HAS_YASM
 endif # USE_CPUMINING
 endif # USE_SHA256D
 
+bfgminer_SOURCES += malgo/sha256e3.c
+if USE_OPENCL
+dist_kernels_DATA += $(top_srcdir)/opencl/elemental.cl
+endif
+
 if USE_SCRYPT
 bfgminer_SOURCES += malgo/scrypt.c malgo/scrypt.h
 dist_doc_DATA += README.scrypt
