@@ -702,6 +702,7 @@ json_t *json_rpc_call_completed(CURL *curl, int rc, bool probe, int *rolltime, v
 	pool->cgminer_pool_stats.hadexpire = state->hi.hadexpire;
 
 	val = JSON_LOADS(state->all_data.buf, &err);
+	applog(LOG_INFO, "v: %s", state->all_data.buf);
 	if (!val) {
 		applog(LOG_INFO, "JSON decode failed(%d): %s", err.line, err.text);
 
