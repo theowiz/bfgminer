@@ -209,3 +209,49 @@ void sha256_final(sha256_ctx *ctx, unsigned char *digest)
         UNPACK32(ctx->h[i], &digest[i << 2]);
     }
 }
+
+
+void sha256e3(const unsigned char *message, unsigned int len, unsigned char *digest)
+{
+    sha256_ctx ctx;
+
+    sha256e3_init(&ctx);
+    sha256_update(&ctx, message, len);
+    sha256e3_final(&ctx, digest);
+}
+
+void sha256e3_init(sha256_ctx *ctx)
+{
+    int i;
+    for (i = 0; i < 8; i++) {
+        ctx->h[i] = sha256_h0[i];
+    }
+
+    ctx->len = 0;
+    ctx->tot_len = 0;
+}
+
+void sha256e3_final(sha256_ctx *ctx, unsigned char *digest)
+{
+    unsigned int block_nb;
+    unsigned int pm_len;
+    unsigned int len_b;
+
+    int i;
+
+    block_nb = (1 + ((SHA256_BLOCK_SIZE - 9)
+                     < (ctx->len % SHA256_BLOCK_SIZE)));
+
+    len_b = (ctx->tot_len + ctx->len) << 3;
+    pm_len = block_nb << 6;
+
+    memset(ctx->block + ctx->len, 0, pm_len - ctx->len);
+    ctx->block[ctx->len] = 0x80;
+    UNPACK32(len_b, ctx->block + pm_len - 4);
+
+    sha256_transf(ctx, ctx->block, block_nb);
+
+    for (i = 0 ; i < 8; i++) {
+        UNPACK32(ctx->h[i], &digest[i << 2]);
+    }
+}
