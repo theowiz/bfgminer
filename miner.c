@@ -6724,6 +6724,7 @@ double share_diff(const struct work *work)
 static
 void work_check_for_block(struct work * const work)
 {
+	printf("work_check_for_block");
 	struct pool * const pool = work->pool;
 	struct mining_goal_info * const goal = pool->goal;
 	
@@ -6799,7 +6800,7 @@ static struct submit_work_state *begin_submission(struct work *work)
 	*sws = (struct submit_work_state){
 		.work = work,
 	};
-
+	printf("begin_submission");
 	work_check_for_block(work);
 
 	if (stale_work(work, true)) {
@@ -10546,6 +10547,7 @@ void _submit_work_async(struct work *work)
 	if (opt_benchmark)
 	{
 		json_t * const jn = json_null(), *result = NULL;
+		printf("_submit_work_async");
 		work_check_for_block(work);
 		{
 			static struct dupe_hash_elem *dupe_hashes;
