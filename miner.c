@@ -10177,7 +10177,7 @@ static struct work *clone_work(struct work *work)
 
 void gen_hash(unsigned char *data, unsigned char *hash, int len)
 {
-	printf("gen_hash miner.c \n")
+	printf("gen_hash miner.c \n");
 	unsigned char hash1[32];
 
 	sha256(data, len, hash1);
