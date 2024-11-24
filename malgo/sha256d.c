@@ -18,10 +18,13 @@
 #include "miner.h"
 #include "ocl.h"
 #include "util.h"
+#include <stdio.h>
 
 static
 void hash_data(void *out_hash, const void *data)
 {
+	printf("hash_data sha256d.c");
+
 	unsigned char blkheader[80];
 	
 	// data is past the first SHA256 step (padding and interpreting as big endian on a little endian platform), so we need to flip each 32-bit chunk around to get the original input block header
