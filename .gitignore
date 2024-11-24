@@ -13,6 +13,7 @@ minerd.exe
 autom4te.cache
 .deps
 
+malgo/.dirstamp
 Makefile
 Makefile.in
 INSTALL
