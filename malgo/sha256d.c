@@ -23,7 +23,7 @@
 static
 void hash_data(void *out_hash, const void *data)
 {
-	printf("hash_data sha256d.c");
+	printf("hash_data sha256d.c\n");
 
 	unsigned char blkheader[80];
 	
