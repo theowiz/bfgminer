@@ -32,8 +32,16 @@ void hash_data(void *out_hash, const void *data)
 	unsigned char hash1[32];
 	unsigned char hash2[32];
 	sha256e3(blkheader, 80, hash1);
-	sha256e3(hash1, 32, out_hash);
-	// sha256e3(hash2, 32, out_hash);
+	sha256e3(hash1, 32, hash2);
+	sha256e3(hash2, 32, out_hash);
+
+	/*
+	unsigned char hash1[32];
+	unsigned char hash2[32];
+	sha256(blkheader, 80, hash1);
+	sha256(hash1, 32, hash2);
+	sha256(hash2, 32, out_hash);
+	*/
 }
 
 #ifdef USE_OPENCL
