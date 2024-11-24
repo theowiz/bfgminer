@@ -31,12 +31,12 @@ void hash_data(void *out_hash, const void *data)
 	swap32yes(blkheader, data, 80 / 4);
 	
 	// double-SHA256 to get the block hash
-	// gen_hash(blkheader, out_hash, 80);
-	unsigned char hash1[32];
+	gen_hash(blkheader, out_hash, 80);
+	/*unsigned char hash1[32];
 	unsigned char hash2[32];
 	sha256e3(blkheader, 80, hash1);
 	sha256e3(hash1, 32, hash2);
-	sha256e3(hash2, 32, out_hash);
+	sha256e3(hash2, 32, out_hash);*/
 
 	/*
 	unsigned char hash1[32];
