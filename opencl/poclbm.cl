@@ -1,3 +1,5 @@
+// kernel-interface: poclbm SHA256d
+
 /*
  *  Modified in May of 2012 by Dhiru Kholia for JtR.
  *
